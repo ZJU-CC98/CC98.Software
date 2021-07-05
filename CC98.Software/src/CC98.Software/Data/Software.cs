@@ -3,53 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CC98.Software.Data
 {
-    public class UploadWare
-    {
-        public string Name
-        {
-            get; set;
-        }
-        public Platform Platform
-        {
-            get; set;
-        }
-
-        public string Introduction
-        {
-            get; set;
-        }
-        public IFormFile  File
-        {
-            get; set;
-        }
-       public IFormFile Photo
-        {
-            get; set;
-
-        }
-    }
-    public class Category
-    {
-        public int Id
-        {
-            get; set; 
-        }
-
-        public string Name
-        {
-            get; set;
-        }
-    }
-    public enum Platform
-    {                
-        Windows,Mac,Android,Ios
-    }
     public class Software
     {
+        /// <summary>
+        /// 常用软件标记。
+        /// </summary>
+        public bool IsAccepted
+        {
+            get; set;
+
+        }
+        public bool IsFrequent
+        {
+            get; set;
+        }
         public string Name
         {
             get; set;
@@ -67,22 +39,22 @@ namespace CC98.Software.Data
 
         public Platform Platform
         {
-            get; set;          
+            get; set;
         }
 
         public Category Class
         {
-            get; set;         
+            get; set;
         }
 
         public string Introduction
         {
-            get; set;         
+            get; set;
         }
 
-        public DateTimeOffset   UpdateTime
+        public DateTimeOffset UpdateTime
         {
-            get; set;           
+            get; set;
         }
 
         public int DownloadNum
@@ -95,20 +67,19 @@ namespace CC98.Software.Data
             get; set;
         }
 
-        public IFormFile File
-        {
-            get; set; 
-        }
-
         public string FileLocation
         {
             get; set;
         }
-
-        public IFormFile Photo
+        public string UploaderName
         {
             get; set;
-            
         }
+        public bool IsRecommended { get; set; }
+        public string Filename { get; set; }
+
+        [InverseProperty("Software")]
+        public virtual ICollection<Comment> Comments { get; set; } = new Collection<Comment>();
+
     }
 }

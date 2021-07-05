@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@model Software
+@inject IAuthorizationService Authorization
+
+@if (await Authorization.AuthorizeAsync(User, "Manage"))
+{
+    <a asp-controller="home" asp-action="deletesoftware" asp-route-Id="@Model.Id">删除</a>
+}
+<div class="container">
+    <div class="row">
+        <br />
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row">
+                <center><h1>详细信息</h1></center>
+                <br />
+            </div>
+            <div class="row">
+                
+                <br />
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"><h4>软件名</h4></div>
+                <div class="col-md-8"><h4><a asp-controller="Home" asp-action="download address">@Model.Name</a></h4></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">简介</div>
+                <div class="col-md-8">@Model.Introduction</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">游戏贴图</div>  //有图片地址
+                <div class="col-md-4"><img src="..." alt="..." class="img-rounded"></div>
+                <div class="col-md-4"><img src="..." alt="..." class="img-rounded"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">大小</div>
+                <div class="col-md-8">@Model.Size</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">类别</div>
+                <div class="col-md-8">@Model.Class</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">上传时间</div>
+                <div class="col-md-8">@Model.UpdateTime</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">上传者</div>
+                <div class="col-md-8">@Model.UploaderName</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">下载数</div>
+                <div class="col-md-8">@Model.DownloadNum</div>
+            </div>
+
+            <a asp-controller="home" asp-action="Download" asp-route-id="@Model.Id" download="@Model.Name">下载</a>
+            //分页
+            <a class="btn" asp-controller="home" asp-action="ChangeFrequencyT" asp-route-id="@Model.Id"></a>
+            <a class="btn" asp-controller="home" asp-action="ChangeFrequencyF" asp-route-id="@Model.Id"></a>
+            <a class="btn" asp-controller="home" asp-action="ChangeRecommendationT" asp-route-id="@Model.Id"></a>
+            <a class="btn" asp-controller="home" asp-action="ChangeRecommendationF" asp-route-id="@Model.Id"></a>
+
+            <div class="row">
+                <div class="col-md-2">评论数</div>
+                <div class="col-md-8">@Model.DownloadNum</div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row">
+                <center>
+                    <h2>相关评论</h2>
+                </center>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    @foreach (var i in @Model.Comments)
+                    {
+                        <div class="row">@i.Content</div>
+                        <div class="row">@i.Time</div>}
+                </div>
+            </div>
+
+
+            <div class="row">
+                <center>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-default">上一页</button>
+                        @for (var page = 1; page <= ViewBag.amount / 10 + 1; page++)
+                        {
+
+                            <a class="btn" asp-controller="home" asp-action="list" asp-route-classid="@ViewBag.classid" asp-route-page="@page">@page</a>
+                        }
+                        <a class="btn btn-default" asp-controller="home" asp-action="list" asp-route-classid="@ViewBag.classid" asp-route-page="@ViewBag.curPage+1">下一页</a>
+                    </div>
+                </center>
+            </div>
+            <div class="row">
+                <center>
+                    <a href="该软件的链接">1</a>&ensp;
+                    <a href="该软件的链接">n</a>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<hr />

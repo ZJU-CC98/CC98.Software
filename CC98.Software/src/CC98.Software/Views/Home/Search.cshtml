@@ -1,0 +1,6 @@
+﻿@model Sakura.AspNetCore.IPagedList<Software>
+
+
+@Html.Partial("List", Model);
+
+<pager source="@Model" />

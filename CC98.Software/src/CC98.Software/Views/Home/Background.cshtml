@@ -1,0 +1,39 @@
+﻿@model Software[]   
+
+
+<h1 class="page-header lead">后台审核界面</h1>   
+<a asp-action="CategoryManagement" asp-home="controller">分类管理</a>
+
+<form  >
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>软件名称</th>
+                <th>适用平台</th>
+                <th>软件简介</th>
+                <th>软件大小</th>
+                <th>文件位置</th>
+                <th>审核操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+                if (i.IsAccepted == false)
+                {
+
+                    <tr>
+                        <td>@i.Name</td>
+                        <td>@i.Platform</td>
+                        <td>@i.Introduction</td>
+                        <td>@i.Size</td>
+                        <td>@i.FileLocation</td>
+                        <td><a asp-controller="home" asp-action="Accepted" asp-route-id="@i.Id">通过</a></td>
+                        <td><a asp-controller="home" asp-action="UnAccepted" asp-route-id="@i.Id">不通过</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</form>
